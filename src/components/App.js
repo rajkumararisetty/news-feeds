@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import {auth} from '../firebase/Initialize'
-class App extends Component {
+
+class App extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ class App extends Component {
         this.setState({isAllowed: true});
         return true;
       }
-      this.props.logOutSuccess();
+      this.props.logOutAction();
       this.props.history.push('/login')
    });
   }

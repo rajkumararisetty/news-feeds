@@ -11,7 +11,7 @@ function logInFailureSuccess() {
   };
 }
 
-export const logOutSuccess = () => (
+export const logOutAction = () => (
   { type: LOG_OUT }
 );
 
@@ -27,9 +27,14 @@ export const login = (emailId, password) => (
   }
 )
 
-// export function logOut() {
-//   return function (dispatch) {
-//     setFlashMsgCookies('Your are successfully logged out!!');
-//     dispatch(logOutSuccess());
-//   }
-// }
+export const logout = () => (
+  async (dispatch) => {
+    try {
+      await Authenticate.logout();
+      dispatch(logOutAction());
+      return true;
+    } catch(error) {
+      console.log(error);
+    }
+  }
+);

@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {auth} from '../../firebase/Initialize'
-import './styles.css';
+import '../styles.css';
 
 class Login extends PureComponent {
 

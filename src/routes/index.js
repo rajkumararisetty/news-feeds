@@ -3,15 +3,15 @@ import { Route } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import App from '../containers/App';
 import Login from '../containers/Login';
-import NotFoundPage from '../containers/NotFoundPage';
+import Dashboard from '../containers/Dashboard';
 
 const AppRoutes = () => (
   <BrowserRouter>
     <div>
       <App>
-        <Route path="/feeds" component={NotFoundPage} />
+        <Route exact path="/feeds" component={Dashboard} />
       </App>
-      <Route path="/login" component={Login} />
+      <Route exact path="/login" component={Login} />
     </div>
   </BrowserRouter>
 );
