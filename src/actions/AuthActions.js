@@ -1,11 +1,9 @@
 import { SET_CURRENT_USER, LOG_OUT, LOG_IN_FAILURE } from './ActionTypes';
 import * as Authenticate from '../firebase/Authenticate';
 
-export function setCurrentUser(user) {
-  return {
-    type: SET_CURRENT_USER, user
-  };
-}
+export const setCurrentUser = (user) => (
+  { type: SET_CURRENT_USER, user }
+);
 
 function logInFailureSuccess() {
   return {
@@ -13,17 +11,16 @@ function logInFailureSuccess() {
   };
 }
 
-function logOutSuccess() {
-  return {
-    type: LOG_OUT
-  };
-}
+export const logOutSuccess = () => (
+  { type: LOG_OUT }
+);
 
 export const login = (emailId, password) => (
   async (dispatch) => {
     try {
       const user = await Authenticate.login(emailId, password);
       dispatch(setCurrentUser(user));
+      return true;
     } catch(error) {
       console.log(error);
     }

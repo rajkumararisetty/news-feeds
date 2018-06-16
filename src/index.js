@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 import ConfigureStore from './store/ConfigureStore';
-
 import './public/index.css';
-import App from './components/App';
+import AppRoutes from './routes';
 
+const store = ConfigureStore()
 ReactDOM.render(
-  <Provider store={ConfigureStore()}>
-    <App />
+  <Provider store={store}>
+    <AppRoutes />
   </Provider>,
   document.getElementById('root')
 );
