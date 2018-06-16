@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import * as AuthAction from './actions/AuthActions'
+import logo from '../public/logo.svg';
+import '../public/App.css';
+import * as AuthAction from '../actions/AuthActions'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-// import db from './firebase/Initialize';
-// console.log(db);
 class App extends Component {
   simpleAction = (event) => {
-    this.props.simpleAction();
+    this.props.login('rajkumararisetty1993@gmail.com', 'password');
   }
 
   render() {

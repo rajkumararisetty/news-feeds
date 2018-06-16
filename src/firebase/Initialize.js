@@ -1,13 +1,17 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 import env from '../.env';
 
 // Initialize Cloud Firestore through Firebase
 firebase.initializeApp({
   apiKey: env.firebase.apiKey,
   authDomain: env.firebase.authDomain,
-  projectId: env.firebase.projectId
+  databaseURL: env.firebase.databaseURL,
+  projectId: env.firebase.projectId,
+  storageBucket: env.firebase.storageBucket,
+  messagingSenderId: env.firebase.messagingSenderId
 });
-const db = firebase.firestore();
 
-export default db;
+export const db = firebase.firestore();
+export const auth = firebase.auth();
