@@ -5,7 +5,7 @@ const addFeedAction = (id, feed) => (
   {type: ADD_FEED, feed, id}
 );
 
-const listFeeds = (feeds) => (
+export const listFeeds = (feeds) => (
   {type: LIST_FEEDS, feeds}
 );
 

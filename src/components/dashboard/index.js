@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import { NavBar } from './nav';
 import Feed from './feeds';
 import './styles.css';
+import { db } from '../../firebase/Initialize';
 
 class Dashboard extends PureComponent {
 
@@ -22,7 +23,17 @@ class Dashboard extends PureComponent {
   }
 
   componentDidMount = () => {
-    this.props.feedsAction.getFeeds();
+    const { feedsAction } = this.props;
+    const set = db.collection("posts").orderBy('createdTime', 'desc').limit(10);
+    this.unSubscribe = set.onSnapshot(function(feedsList) {
+        if (feedsList.size > 0) {
+          feedsAction.listFeeds(feedsList);
+        }
+    });
+  }
+
+  componentWillUnmount = () => {
+    this.unSubscribe();
   }
 
   onChange = (event) => {
