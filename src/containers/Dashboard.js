@@ -5,7 +5,10 @@ import Dashboard from '../components/dashboard';
 import * as AuthAction from '../actions/AuthActions'
 import * as FireStoreActions from '../actions/FireStoreActions'
 
-const mapStateToProps = (state) => ({auth: state.AuthReducer});
+const mapStateToProps = (state) => ({
+  auth: state.AuthReducer,
+  feedsList: state.FeedReducer
+});
 
 const mapDispatchToProps = (dispatch) => ({
       authAction: bindActionCreators(AuthAction, dispatch),

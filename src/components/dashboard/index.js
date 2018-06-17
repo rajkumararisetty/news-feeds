@@ -10,7 +10,7 @@ class Dashboard extends Component {
     this.state = {
       feed : {
         postText: "",
-        owner: this.props.auth.user.email,
+        ownerEmail: this.props.auth.user.email,
         ownerId: this.props.auth.user.userId,
         like: 0,
         id:""
@@ -19,6 +19,10 @@ class Dashboard extends Component {
     this.logout = this.logout.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount = () => {
+    this.props.feedsAction.getFeeds();
   }
 
   onChange = (event) => {
@@ -53,12 +57,13 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.props.auth;
+    const { feedsList } = this.props
     const { feed } = this.state;
     return (
       <React.Fragment>
         <NavBar logout={this.logout} />
         <h3 className="welcome" >Welcome {user.email}</h3>
-        <Feed currentFeed={feed} onChange={this.onChange} onSubmit={this.onSubmit} />
+        <Feed feedsList={feedsList} currentFeed={feed} onChange={this.onChange} onSubmit={this.onSubmit} />
       </React.Fragment>
     );
   }

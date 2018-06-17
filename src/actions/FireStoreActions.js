@@ -5,6 +5,10 @@ const addFeedAction = (id, feed) => (
   {type: ADD_FEED, feed, id}
 );
 
+const listFeeds = (feeds) => (
+  {type: LIST_FEEDS, feeds}
+);
+
 export const addFeed = (feedDetails) => (
   async (dispatch) => {
     try {
@@ -15,7 +19,22 @@ export const addFeed = (feedDetails) => (
       }
       return false
     } catch(error) {
-      return error;
+      throw error;
     }
   }
-)
+);
+
+export const getFeeds = (limit=10, offset=10) => (
+  async (dispatch) => {
+    try {
+      const feedsList = await Feeds.getFeeds(limit, offset);
+      if (feedsList.size > 0) {
+        dispatch(listFeeds(feedsList));
+        return true;
+      }
+      return false;
+    } catch(error) {
+      throw error;
+    }
+  }
+);

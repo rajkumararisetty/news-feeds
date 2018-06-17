@@ -17,7 +17,11 @@ class App extends Component {
         if (user.email !== this.props.auth.user.email) {
           this.props.setCurrentUser(user);
         }
-        this.setState({isAllowed: true});
+        this.setState({isAllowed: true}, () => {
+          if ('/' === this.props.location.pathname) {
+            this.props.history.push('/feeds');
+          }
+        });
         return true;
       }
       this.props.logOutAction();
@@ -26,7 +30,7 @@ class App extends Component {
   }
 
   componentWillReceiveProps = (newProps) => {
-    if (newProps.location.pathname !== '/login') {
+    if ('/login' !== newProps.location.pathname) {
       this.authenticateAndRedirect();
     }
   }
