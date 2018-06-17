@@ -1,8 +1,8 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {auth} from '../../firebase/Initialize'
 import '../styles.css';
 
-class Login extends PureComponent {
+class Login extends Component {
 
   constructor(props) {
     super(props);
@@ -15,9 +15,10 @@ class Login extends PureComponent {
     }
   }
 
-  UNSAFE_componentWillMount = () => {
+  componentDidMount = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user);
         this.props.history.push('/feeds');
         return true;
       }

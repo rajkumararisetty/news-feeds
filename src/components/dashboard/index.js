@@ -1,7 +1,7 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import '../styles.css';
 
-class Dashboard extends PureComponent {
+class Dashboard extends Component {
 
   logout = (event) => {
     event.preventDefault();

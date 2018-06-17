@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {auth} from '../firebase/Initialize'
 
-class App extends PureComponent {
+class App extends Component {
 
   constructor(props) {
     super(props);
@@ -11,10 +11,22 @@ class App extends PureComponent {
     };
   }
 
+  componentWillReceiveProps = (newProps) => {
+    if (newProps.location.pathname !== '/login') {
+      this.authenticateAndRedirect();
+    }
+  }
+
   componentDidMount = () => {
+    this.authenticateAndRedirect();
+  }
+
+  authenticateAndRedirect  = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        this.props.setCurrentUser({email: user.email});
+        if (user.email !== this.props.auth.user.email) {
+          this.props.setCurrentUser({email: user.email});
+        }
         this.setState({isAllowed: true});
         return true;
       }
