@@ -16,16 +16,18 @@ class Login extends Component {
   }
 
   componentDidMount = () => {
-    auth.onAuthStateChanged((user) => {
+    this.unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         this.props.history.push('/feeds');
         return true;
       }
-      if (this.state.isAuthenticated) {
-        this.setState({isAuthenticated: false});
-      }
+      this.setState({isAuthenticated: false});
    });
   };
+
+  componentWillUnmount = () => {
+    this.unsubscribe()
+  }
 
   login = async (event) => {
     event.preventDefault();

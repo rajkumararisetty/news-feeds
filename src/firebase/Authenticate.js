@@ -4,7 +4,7 @@ export const login = async (email, password) => {
   try {
     const response = await auth.signInWithEmailAndPassword(email, password);
     if (response.user) {
-      return {email: response.user.email};
+      return response.user;
     }
   } catch(error) {
     throw error;

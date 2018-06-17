@@ -3,4 +3,5 @@ export default {
     isAuthenticated: false,
     user: {},
   },
+  feeds: []
 };

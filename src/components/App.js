@@ -12,10 +12,10 @@ class App extends Component {
   }
 
   authenticateAndRedirect  = () => {
-    auth.onAuthStateChanged((user) => {
+    this.unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         if (user.email !== this.props.auth.user.email) {
-          this.props.setCurrentUser({email: user.email});
+          this.props.setCurrentUser(user);
         }
         this.setState({isAllowed: true});
         return true;
@@ -33,6 +33,10 @@ class App extends Component {
 
   componentDidMount = () => {
     this.authenticateAndRedirect();
+  }
+
+  componentWillUnmount = () => {
+    this.unsubscribe()
   }
 
   render() {

@@ -10,7 +10,7 @@ input, button {
   font-weight: 700;
 }
 
-.main-div, .loggedin-div {
+.main-div {
   width: 20%;
   margin: 0px auto;
   margin-top: 150px;
@@ -35,7 +35,7 @@ input, button {
   border: 1px solid #777;
 }
 
-.main-div button, .loggedin-div button {
+.main-div button {
   background: #5d8ffc;
   color: #fff;
   border: 1px solid #5d8ffc;
@@ -49,7 +49,7 @@ input, button {
   margin-left: 5%;
 }
 
-.main-div button:hover, .loggedin-div button:hover {
+.main-div button:hover {
   background: #fff;
   color: #5d8ffc;
   border: 1px solid #5d8ffc;

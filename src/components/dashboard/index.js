@@ -1,11 +1,50 @@
 import React, {Component} from 'react';
-import '../styles.css';
+import { NavBar } from './nav';
+import Feed from './feeds';
+import './styles.css';
 
 class Dashboard extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      feed : {
+        postText: "",
+        owner: this.props.auth.user.email,
+        ownerId: this.props.auth.user.userId,
+        like: 0,
+        id:""
+      }
+    };
+    this.logout = this.logout.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onChange = (event) => {
+    event.preventDefault();
+    const newFeed = Object.assign({}, this.state.feed);
+    newFeed[event.target.name] = event.target.value;
+    this.setState({feed: newFeed});
+  }
+
+  onSubmit = async (event) => {
+    event.preventDefault();
+    const status = this.props.feedsAction.addFeed(this.state.feed);
+    if (status) {
+      const newFeed = Object.assign({}, this.state.feed);
+      newFeed.ownerId='';
+      newFeed.postText='';
+      newFeed.like='';
+      newFeed.id='';
+      this.setState({feed: newFeed});
+      return true;
+    }
+  }
+
   logout = (event) => {
     event.preventDefault();
-    this.props.logout().then((status) => {
+    this.props.authAction.logout().then((status) => {
       if (status) {
         this.props.history.push('/login');
       }
@@ -14,12 +53,13 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.props.auth;
+    const { feed } = this.state;
     return (
-      <div className="loggedin-div">
-      <h3>Welcome {user.email}</h3>
-          <p id="user_para">Welcome to news feeds web app. You are currently logged in.</p>
-          <button onClick={this.logout}>Logout</button>
-      </div>
+      <React.Fragment>
+        <NavBar logout={this.logout} />
+        <h3 className="welcome" >Welcome {user.email}</h3>
+        <Feed currentFeed={feed} onChange={this.onChange} onSubmit={this.onSubmit} />
+      </React.Fragment>
     );
   }
 }

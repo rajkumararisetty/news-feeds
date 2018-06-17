@@ -1,15 +1,13 @@
-import db from '../Initialize';
+import { db } from '../Initialize';
 
-export const addPost = async (postDetails) => {
+export const addFeed = async (postDetails) => {
   try {
     const addResponse = await db.collection("posts").add({
-        postId: '123',
-        ownerID: 'Rajkumar',
-        postText: 'Jioooo',
-        ownerName: 'Sachin',
-        like: '100000'
+        ownerID: postDetails.ownerId,
+        postText: postDetails.postText,
+        ownerEmail: postDetails.owner,
+        like: postDetails.like
     });
-
     return addResponse;
   } catch(error) {
     throw error;

@@ -7,16 +7,12 @@ import Dashboard from '../containers/Dashboard';
 
 const AppRoutes = () => (
   <BrowserRouter>
-  <div>
-    <Switch>
-      <Route exact path="/login" component={Login} />
-    </Switch>
-    <Switch>
-      <App>
-        <Route exact path="/feeds" component={Dashboard} />
-      </App>
-    </Switch>
-  </div>
+  <Switch>
+    <Route exact path="/login" component={Login} />
+    <App>
+      <Route exact path="/feeds" component={Dashboard} />
+    </App>
+  </Switch>
   </BrowserRouter>
 );
 
