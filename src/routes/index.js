@@ -10,8 +10,8 @@ const AppRoutes = () => (
   <div>
     <Switch>
       <Route exact path="/login" component={Login} />
-      </Switch>
-      <Switch>
+    </Switch>
+    <Switch>
       <App>
         <Route exact path="/feeds" component={Dashboard} />
       </App>

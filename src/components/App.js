@@ -11,16 +11,6 @@ class App extends Component {
     };
   }
 
-  componentWillReceiveProps = (newProps) => {
-    if (newProps.location.pathname !== '/login') {
-      this.authenticateAndRedirect();
-    }
-  }
-
-  componentDidMount = () => {
-    this.authenticateAndRedirect();
-  }
-
   authenticateAndRedirect  = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -33,6 +23,16 @@ class App extends Component {
       this.props.logOutAction();
       this.props.history.push('/login')
    });
+  }
+
+  componentWillReceiveProps = (newProps) => {
+    if (newProps.location.pathname !== '/login') {
+      this.authenticateAndRedirect();
+    }
+  }
+
+  componentDidMount = () => {
+    this.authenticateAndRedirect();
   }
 
   render() {
