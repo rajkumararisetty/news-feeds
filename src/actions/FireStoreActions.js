@@ -14,7 +14,6 @@ export const addFeed = (feedDetails) => (
     try {
       const addResponse = await Feeds.addFeed(feedDetails);
       if (addResponse.id) {
-        dispatch(addFeedAction(addResponse.id, feedDetails));
         return true;
       }
       return false

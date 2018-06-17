@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import { toastr } from 'react-redux-toastr';
 import { NavBar } from './nav';
 import Feed from './feeds';
 import './styles.css';
@@ -27,6 +28,7 @@ class Dashboard extends PureComponent {
     const set = db.collection("posts").orderBy('createdTime', 'desc').limit(10);
     this.unSubscribe = set.onSnapshot(function(feedsList) {
         if (feedsList.size > 0) {
+          toastr.info('Update', 'Updating List');
           feedsAction.listFeeds(feedsList);
         }
     });
@@ -47,6 +49,7 @@ class Dashboard extends PureComponent {
     event.preventDefault();
     const status = this.props.feedsAction.addFeed(this.state.feed);
     if (status) {
+      toastr.success('Success', 'Feed Added');
       const newFeed = Object.assign({}, this.state.feed);
       newFeed.ownerId='';
       newFeed.postText='';
@@ -61,6 +64,7 @@ class Dashboard extends PureComponent {
     event.preventDefault();
     this.props.authAction.logout().then((status) => {
       if (status) {
+        toastr.success('Success', 'Logged Out');
         this.props.history.push('/login');
       }
     });

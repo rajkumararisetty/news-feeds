@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {auth} from '../../firebase/Initialize'
+import {auth} from '../../firebase/Initialize';
+import {toastr} from 'react-redux-toastr';
 import '../styles.css';
 
 class Login extends Component {
@@ -34,6 +35,7 @@ class Login extends Component {
     const { email, password } = this.state.loginCreds;
     const status = await this.props.login(email, password);
     if (status) {
+      toastr.success('Success', 'Logged In');
       this.props.history.push('/feeds');
     }
   }
