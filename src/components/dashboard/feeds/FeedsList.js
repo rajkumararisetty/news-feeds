@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { CommonPureComponent } from '../../hoc/CommonPureHOC';
 import './styles.css';
 import FeedCard from './FeedCard';
 
@@ -10,4 +11,4 @@ export const FeedsList = ({feedsList}) => (
   </div>
 );
 
-export default FeedsList;
+export default CommonPureComponent(FeedsList);

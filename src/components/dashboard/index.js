@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import { NavBar } from './nav';
 import Feed from './feeds';
 import './styles.css';
 
-class Dashboard extends Component {
+class Dashboard extends PureComponent {
 
   constructor(props) {
     super(props);

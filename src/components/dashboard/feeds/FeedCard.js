@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { CommonPureComponent } from '../../hoc/CommonPureHOC';
 import './styles.css';
 
 export const FeedCard = ({eachFeed}) => (
@@ -20,4 +21,4 @@ export const FeedCard = ({eachFeed}) => (
   </div>
 );
 
-export default FeedCard;
+export default CommonPureComponent(FeedCard);

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { CommonPureComponent } from '../../hoc/CommonPureHOC';
 import {FeedInput} from './FeedInput';
 import {FeedsList} from './FeedsList';
 import './styles.css';
@@ -10,4 +11,4 @@ export const Feed = ({feedsList, onChange, currentFeed, onSubmit}) => (
   </React.Fragment>
 );
 
-export default Feed;
+export default CommonPureComponent(Feed);
