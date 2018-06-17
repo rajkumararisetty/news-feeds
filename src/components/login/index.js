@@ -18,11 +18,12 @@ class Login extends Component {
   componentDidMount = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         this.props.history.push('/feeds');
         return true;
       }
-      this.setState({isAuthenticated: false});
+      if (this.state.isAuthenticated) {
+        this.setState({isAuthenticated: false});
+      }
    });
   };
 
