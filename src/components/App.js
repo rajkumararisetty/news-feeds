@@ -11,7 +11,7 @@ class App extends PureComponent {
     };
   }
 
-  authenticateAndRedirect  = () => {
+  componentDidMount = () => {
     this.unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         if (user.email !== this.props.auth.user.email) {
@@ -27,16 +27,6 @@ class App extends PureComponent {
       this.props.logOutAction();
       this.props.history.push('/login')
    });
-  }
-
-  componentWillReceiveProps = (newProps) => {
-    if ('/login' !== newProps.location.pathname) {
-      this.authenticateAndRedirect();
-    }
-  }
-
-  componentDidMount = () => {
-    this.authenticateAndRedirect();
   }
 
   componentWillUnmount = () => {

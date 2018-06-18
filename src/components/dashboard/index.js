@@ -64,7 +64,6 @@ class Dashboard extends PureComponent {
     event.preventDefault();
     this.props.authAction.logout().then((status) => {
       if (status) {
-        toastr.success('Success', 'Logged Out');
         this.props.history.push('/login');
       }
     });
