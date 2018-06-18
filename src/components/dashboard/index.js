@@ -25,7 +25,7 @@ class Dashboard extends PureComponent {
 
   componentDidMount = () => {
     const { feedsAction } = this.props;
-    const set = db.collection("posts").orderBy('createdTime', 'desc').limit(10);
+    const set = db.collection("posts").orderBy('createdTime', 'desc');
     this.unSubscribe = set.onSnapshot(function(feedsList) {
         if (feedsList.size > 0) {
           toastr.info('Update', 'Updating List');
