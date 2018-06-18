@@ -10,7 +10,7 @@ const AppRoutes = () => (
   <Switch>
     <Route exact path="/login" component={Login} />
     <App>
-      <Route exact path="/feeds" component={Dashboard} />
+      <Route exact path="/" component={Dashboard} />
     </App>
   </Switch>
   </BrowserRouter>

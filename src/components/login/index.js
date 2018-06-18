@@ -19,7 +19,7 @@ class Login extends Component {
   componentDidMount = () => {
     this.unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        this.props.history.push('/feeds');
+        this.props.history.push('/');
         return true;
       }
       this.setState({isAuthenticated: false});
@@ -36,7 +36,7 @@ class Login extends Component {
     const status = await this.props.login(email, password);
     if (status) {
       toastr.success('Success', 'Logged In');
-      this.props.history.push('/feeds');
+      this.props.history.push('/');
     }
   }
 

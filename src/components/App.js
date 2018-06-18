@@ -18,8 +18,8 @@ class App extends PureComponent {
           this.props.setCurrentUser(user);
         }
         this.setState({isAllowed: true}, () => {
-          if ('/' === this.props.location.pathname) {
-            this.props.history.push('/feeds');
+          if ('/' !== this.props.location.pathname) {
+            this.props.history.push('/');
           }
         });
         return true;
