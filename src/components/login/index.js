@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {auth} from '../../firebase/Initialize';
 import {toastr} from 'react-redux-toastr';
+import ReactLoading from 'react-loading';
+import {auth} from '../../firebase/Initialize';
 import '../styles.css';
 
 class Login extends Component {
@@ -10,7 +11,8 @@ class Login extends Component {
     this.state = {
       loginCreds: {
         email: '',
-        password: ''
+        password: '',
+        loading: false
       },
       isAuthenticated: true
     }
@@ -19,7 +21,11 @@ class Login extends Component {
   componentDidMount = () => {
     this.unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        this.props.history.push('/');
+        this.setState({
+          loading: false
+        }, () => {
+          this.props.history.push('/');
+        });
         return true;
       }
       this.setState({isAuthenticated: false});
@@ -32,11 +38,19 @@ class Login extends Component {
 
   login = async (event) => {
     event.preventDefault();
+    this.setState({loading: true});
     const { email, password } = this.state.loginCreds;
-    const status = await this.props.login(email, password);
-    if (status) {
-      toastr.success('Success', 'Logged In');
-      this.props.history.push('/');
+    try {
+      const status = await this.props.login(email, password);
+      if (!status) {
+        toastr.error('Something went wrong please try again');
+        return true;
+      }
+    } catch(error) {
+      this.setState({loading: false}, () => {
+        toastr.error(error.message);
+      });
+      return true;
     }
   }
 
@@ -48,7 +62,7 @@ class Login extends Component {
   }
 
   render() {
-    const {loginCreds, isAuthenticated} = this.state;
+    const {loginCreds, isAuthenticated, loading} = this.state;
     return (
       <div className="login-app">
       {!isAuthenticated &&
@@ -56,7 +70,8 @@ class Login extends Component {
             <h3 className="login-head">Login</h3>
             <input value={loginCreds.email} name="email" onChange={this.onChange} type="email" placeholder="Email..." />
             <input value={loginCreds.password} name="password" onChange={this.onChange} type="password" placeholder="Password..." />
-            <button onClick={this.login} >Login to Account</button>
+            {loading ? <ReactLoading type="spin" color="#444"  height={30} width={30} />
+            : <button onClick={this.login} >Login to Account</button> }
         </div>
       }
       </div>
