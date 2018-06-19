@@ -10,3 +10,9 @@
 .feedcard-post-owner-time-snap {
   font-weight: bold;
 }
+
+.feed-intput-textarea {
+  resize: none;
+  margin-bottom: 1%;
+  outline: none;
+}

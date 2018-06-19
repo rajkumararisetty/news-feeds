@@ -10,6 +10,7 @@ export const Feed = ({feedsList, onChange, currentFeed, onSubmit}) => (
       <div className="col-sm-3"> </div>
         <div className="col-sm-6">
           <FeedInput onChange={onChange} currentFeed={currentFeed} onSubmit={onSubmit} />
+          <br />
           <FeedsList feedsList={feedsList} />
         </div>
       <div className="col-sm-3"> </div>
