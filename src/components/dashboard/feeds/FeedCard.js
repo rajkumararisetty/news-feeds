@@ -2,7 +2,7 @@ import React from 'react';
 import { CommonPureComponent } from '../../hoc/CommonPureHOC';
 import './styles.css';
 
-export const FeedCard = ({eachFeed}) => (
+export const FeedCard = ({eachFeed, onLike}) => (
   <React.Fragment>
     <div className="card">
       <div className="card-body">
@@ -26,7 +26,10 @@ export const FeedCard = ({eachFeed}) => (
         </div>
         <hr />
         <footer>
-          <a href="#" className="btn btn-info btn-sm"><i className="fa fa-thumbs-o-up" aria-hidden="true" /> Like</a>
+          <a onClick={(event) => onLike(event, eachFeed)} className="btn btn-info btn-sm text-white">
+            <i className="fa fa-thumbs-o-up" aria-hidden="true" /> Like &nbsp;
+            {(eachFeed.like).length > 0 && <span className="badge badge-light">{(eachFeed.like).length}</span>}
+          </a>
         </footer>
       </div>
     </div>

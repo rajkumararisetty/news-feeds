@@ -14,13 +14,14 @@ class Dashboard extends PureComponent {
         postText: "",
         ownerEmail: this.props.auth.user.email,
         ownerId: this.props.auth.user.userId,
-        like: 0,
+        like: [],
         id:""
       }
     };
     this.logout = this.logout.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onLike = this.onLike.bind(this);
   }
 
   componentDidMount = () => {
@@ -45,18 +46,36 @@ class Dashboard extends PureComponent {
     this.setState({feed: newFeed});
   }
 
+  onLike = (event, feed) => {
+    event.preventDefault();
+    if ((feed.like).indexOf(this.props.auth.user.email) === -1) {
+      const like = [this.props.auth.user.email, ...feed.like]
+      this.props.feedsAction.updateFeeds(feed.id, like).catch(error => {
+        console.log(error);
+        toastr.error('Something went wrong please try again');
+      });
+    } else {
+      toastr.warning('Hey', 'You already liked this');
+    }
+  }
+
   onSubmit = async (event) => {
     event.preventDefault();
-    const status = this.props.feedsAction.addFeed(this.state.feed);
-    if (status) {
-      toastr.success('Success', 'Feed Added');
-      const newFeed = Object.assign({}, this.state.feed);
-      newFeed.ownerId='';
-      newFeed.postText='';
-      newFeed.like='';
-      newFeed.id='';
-      this.setState({feed: newFeed});
-      return true;
+    try {
+      const status = await this.props.feedsAction.addFeed(this.state.feed);
+      if (status) {
+        toastr.success('Success', 'Feed Added');
+        const newFeed = Object.assign({}, this.state.feed);
+        newFeed.postText = "",
+        newFeed.ownerEmail = this.props.auth.user.email,
+        newFeed.ownerId = this.props.auth.user.userId,
+        newFeed.like = [],
+        newFeed.id = ""
+        this.setState({feed: newFeed});
+        return true;
+      }
+    } catch(error) {
+      toastr.error('Something went wrong please try again');
     }
   }
 
@@ -77,7 +96,7 @@ class Dashboard extends PureComponent {
       <React.Fragment>
         <NavBar logout={this.logout} />
         <div className="container py-5">
-          <Feed feedsList={feedsList} currentFeed={feed} onChange={this.onChange} onSubmit={this.onSubmit} />
+          <Feed onLike={this.onLike} feedsList={feedsList} currentFeed={feed} onChange={this.onChange} onSubmit={this.onSubmit} />
         </div>
       </React.Fragment>
     );

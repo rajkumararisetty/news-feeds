@@ -37,3 +37,13 @@ export const getFeeds = (limit=10, offset=10) => (
     }
   }
 );
+
+export const updateFeeds = (id, like) => (
+  async (dispatch) => {
+    try {
+      return await Feeds.updateFeeds(id, like);
+    } catch(error) {
+      throw error;
+    }
+  }
+);

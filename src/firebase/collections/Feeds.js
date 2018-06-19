@@ -1,18 +1,14 @@
 import { db } from '../Initialize';
 
 export const addFeed = async (postDetails) => {
-  try {
-    const addResponse = await db.collection("posts").add({
-        ownerID: postDetails.ownerId,
-        postText: postDetails.postText,
-        ownerEmail: postDetails.ownerEmail,
-        like: postDetails.like,
-        createdTime: Date.now()
-    });
-    return addResponse;
-  } catch(error) {
-    throw error;
-  }
+  const addResponse = await db.collection("posts").add({
+      ownerID: postDetails.ownerId,
+      postText: postDetails.postText,
+      ownerEmail: postDetails.ownerEmail,
+      like: postDetails.like,
+      createdTime: Date.now()
+  });
+  return addResponse;
 }
 
 export const getFeeds = async (limit, offset) => {
@@ -23,4 +19,11 @@ export const getFeeds = async (limit, offset) => {
     console.log(error);
     throw error;
   }
+}
+
+export const updateFeeds = async (id, like) =>  {
+  await db.collection("posts").doc(id).update({
+      "like": like
+  });
+  return true;
 }

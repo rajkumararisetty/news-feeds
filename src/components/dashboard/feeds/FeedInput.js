@@ -8,7 +8,7 @@ export const FeedInput = ({onChange, currentFeed, onSubmit}) => (
     <div className="row">
       <div className="col">
         <div className="form-group">
-          <textarea onChange={onChange} placeholder="Compose your post here..." className="form-control feed-intput-textarea" rows="3" />
+          <textarea onChange={onChange} name="postText" value={currentFeed.postText} placeholder="Compose your post here..." className="form-control feed-intput-textarea" rows="3" />
           <button onClick={onSubmit} className="btn float-right">post</button>
         </div>
       </div>
