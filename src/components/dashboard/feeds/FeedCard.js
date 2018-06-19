@@ -5,7 +5,7 @@ import './styles.css';
 
 export const FeedCard = ({eachFeed, onLike}) => (
   <React.Fragment>
-    <div className="card">
+    <div className="card shadow-sm bg-white rounded">
       <div className="card-body">
         <div className="row">
            <div className="col-sm-1">
