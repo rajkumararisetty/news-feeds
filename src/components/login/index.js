@@ -64,17 +64,37 @@ class Login extends Component {
   render() {
     const {loginCreds, isAuthenticated, loading} = this.state;
     return (
-      <div className="login-app">
+      <React.Fragment >
       {!isAuthenticated &&
-        <div id="login_div" className="main-div">
-            <h3 className="login-head">Login</h3>
-            <input value={loginCreds.email} name="email" onChange={this.onChange} type="email" placeholder="Email..." />
-            <input value={loginCreds.password} name="password" onChange={this.onChange} type="password" placeholder="Password..." />
-            {loading ? <ReactLoading type="spin" color="#444"  height={30} width={30} />
-            : <button onClick={this.login} >Login to Account</button> }
-        </div>
+        <div className="container py-5">
+          <div className="row">
+              <div className="col-md-12">
+                  <div className="row">
+                      <div className="col-md-6 mx-auto">
+                          <div className="card rounded-0">
+                              <div className="card-header">
+                                  <h3 className="mb-0">Login</h3>
+                              </div>
+                              <div className="card-body">
+                                    <div className="form-group">
+                                        <label htmlFor="uname1">Email</label>
+                                        <input value={loginCreds.email} onChange={this.onChange}  name="email" type="email" className="form-control form-control-lg rounded-0"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Password</label>
+                                        <input type="password" value={loginCreds.password} onChange={this.onChange} name="password" className="form-control form-control-lg rounded-0"  />
+                                    </div>
+                                    {loading ? <ReactLoading className="float-right" type="spin" color="#444"  height={30} width={30} /> :
+                                    <button onClick={this.login} className="btn btn-success btn-lg float-right">Login</button> }
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+    </div>
       }
-      </div>
+      </React.Fragment>
     );
   }
 }

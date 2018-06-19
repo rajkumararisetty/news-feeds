@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { CommonPureComponent } from '../../hoc/CommonPureHOC';
 import {FeedInput} from './FeedInput';
 import {FeedsList} from './FeedsList';
@@ -6,8 +6,14 @@ import './styles.css';
 
 export const Feed = ({feedsList, onChange, currentFeed, onSubmit}) => (
   <React.Fragment>
-    <FeedInput onChange={onChange} currentFeed={currentFeed} onSubmit={onSubmit} />
-    <FeedsList feedsList={feedsList} />
+    <div className="row">
+      <div className="col-sm-3"> </div>
+        <div className="col-sm-6">
+          <FeedInput onChange={onChange} currentFeed={currentFeed} onSubmit={onSubmit} />
+          <FeedsList feedsList={feedsList} />
+        </div>
+      <div className="col-sm-3"> </div>
+    </div>
   </React.Fragment>
 );
 

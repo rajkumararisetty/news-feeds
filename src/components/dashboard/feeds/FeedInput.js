@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { CommonPureComponent } from '../../hoc/CommonPureHOC';
+import EmojiTextarea from 'react-emoji-textarea';
 import './styles.css';
 
 export const FeedInput = ({onChange, currentFeed, onSubmit}) => (
   <React.Fragment>
-    <textarea name="postText" value={currentFeed.postText} onChange={onChange} className="feed-input" placeholder="Type here...." cols="30" rows="5" />
-    <button onClick={onSubmit} className="post-button">post</button>
+    <textarea onChange={onChange} className="form-control" rows="3" />
+  <br />
   </React.Fragment>
 );
 

@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import { toastr } from 'react-redux-toastr';
-import { NavBar } from './nav';
+import NavBar from './nav';
 import Feed from './feeds';
 import './styles.css';
 import { db } from '../../firebase/Initialize';
@@ -76,8 +76,9 @@ class Dashboard extends PureComponent {
     return (
       <React.Fragment>
         <NavBar logout={this.logout} />
-        <h3 className="welcome" >Welcome {user.email}</h3>
-        <Feed feedsList={feedsList} currentFeed={feed} onChange={this.onChange} onSubmit={this.onSubmit} />
+        <div className="container py-5">
+          <Feed feedsList={feedsList} currentFeed={feed} onChange={this.onChange} onSubmit={this.onSubmit} />
+        </div>
       </React.Fragment>
     );
   }

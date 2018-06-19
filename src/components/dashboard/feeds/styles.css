@@ -1,60 +1,12 @@
-.feed-input {
-  width: 40%;
-  margin-left: 27%;
-  padding: 1%;
+.feedcard-post-img {
+  border-radius: 50%;
+  overflow: hidden;
+  height: 32px;
+  width: 32px;
 }
-
-.post-button {
-  background-color: #333;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 4px 2px;
-  cursor: pointer;
-  font-size: 10px;
-  margin-left: 62%;
+.feedcard-post-owner-time {
+  font-size: 80%;
 }
-
-.feed-card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    width: 50%;
-    padding-left: 1%;
-    margin-left: 24%;
-    margin-top: 2%;
-}
-
-.feed-card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.feed-card-container {
-    padding: 2px 16px;
-}
-
-.card-header {
-  display: flex;
-}
-
-.owner-time-card {
-  padding-left: 20%;
-  font-size: small;
-}
-
-.owner-email-card {
-    font-size: small;
-}
-
-.card-message {
-  display: flex;
-}
-
-.like-button {
-  height: 30px;
-  margin-left: 60%;
-  margin-top: 2%;
-  cursor: pointer;
+.feedcard-post-owner-time-snap {
+  font-weight: bold;
 }
