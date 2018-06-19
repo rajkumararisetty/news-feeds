@@ -24,7 +24,10 @@ export const FeedCard = ({eachFeed}) => (
             <p className="card-text">{eachFeed.postText}.</p>
           </div>
         </div>
-        <footer><a href="#" className="btn btn-primary">Like</a></footer>
+        <hr />
+        <footer>
+          <a href="#" className="btn btn-info btn-sm"><i className="fa fa-thumbs-o-up" aria-hidden="true" /> Like</a>
+        </footer>
       </div>
     </div>
     <br />
