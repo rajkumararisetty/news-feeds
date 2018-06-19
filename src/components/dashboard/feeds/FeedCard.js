@@ -1,5 +1,6 @@
 import React from 'react';
 import { CommonPureComponent } from '../../hoc/CommonPureHOC';
+import { postTimeCalculator } from '../../../utils/CardHelper';
 import './styles.css';
 
 export const FeedCard = ({eachFeed, onLike}) => (
@@ -15,7 +16,7 @@ export const FeedCard = ({eachFeed, onLike}) => (
               <span className="feedcard-post-owner-time-snap">
                 {eachFeed.ownerEmail}
               </span>
-              <p>2 mins ago</p>
+              <p>{postTimeCalculator(eachFeed.createdTime)}</p>
             </h5>
            </div>
         </div>
