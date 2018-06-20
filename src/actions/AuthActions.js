@@ -25,7 +25,7 @@ export const login = (emailId, password) => (
       throw error;
     }
   }
-)
+);
 
 export const logout = () => (
   async (dispatch) => {
@@ -36,5 +36,13 @@ export const logout = () => (
     } catch(error) {
       console.log(error);
     }
+  }
+);
+
+
+export const signUp = (emailId, password) => (
+  async (dispatch) => {
+      await Authenticate.signUp(emailId, password);
+      return true;
   }
 );

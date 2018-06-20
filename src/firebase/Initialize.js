@@ -17,5 +17,8 @@ const firestore = firebase.firestore();
 const settings = {timestampsInSnapshots: true};
 firestore.settings(settings);
 
-export const db = firestore;
-export const auth = firebase.auth();
+const db = firestore;
+const auth = firebase.auth();
+auth.useDeviceLanguage()
+
+export {db, auth};
