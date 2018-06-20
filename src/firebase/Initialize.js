@@ -21,4 +21,4 @@ const db = firestore;
 const auth = firebase.auth();
 auth.useDeviceLanguage()
 
-export {db, auth};
+export {firebase, db, auth};

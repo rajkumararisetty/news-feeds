@@ -1,5 +1,6 @@
 import { SET_CURRENT_USER, LOG_OUT, LOG_IN_FAILURE } from './ActionTypes';
 import * as Authenticate from '../firebase/Authenticate';
+import * as PhoneAuthenticate from '../firebase/PhoneAuthenticate';
 
 export const setCurrentUser = (user) => (
   { type: SET_CURRENT_USER, user }
@@ -44,5 +45,18 @@ export const signUp = (emailId, password) => (
   async (dispatch) => {
       await Authenticate.signUp(emailId, password);
       return true;
+  }
+);
+
+export const phoneNumberVerify = (phoneNumber) => (
+  async (dispatch) => {
+    return await PhoneAuthenticate.sendOtp(phoneNumber);
+  }
+);
+
+export const submitOpt = (opt, confirmationResult) => (
+  async (dispatch) => {
+    await PhoneAuthenticate.submitOpt(opt, confirmationResult);
+    return true;
   }
 );

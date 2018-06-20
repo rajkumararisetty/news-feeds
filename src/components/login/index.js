@@ -12,10 +12,15 @@ class Login extends Component {
       loginCreds: {
         email: '',
         password: '',
-        loading: false
+        phone:'',
+        otp: ''
       },
+      loading: false,
       isAuthenticated: true,
-      mode: false
+      mode: false,
+      visibleOpt: false,
+      phoneLoading: false,
+      confirmCall: ""
     }
   }
 
@@ -41,12 +46,13 @@ class Login extends Component {
     event.preventDefault();
     this.setState({loading: true});
     const { email, password } = this.state.loginCreds;
+    const { signUp, login } = this.props;
     try {
       let status = false;
       if (this.state.mode) {
-        status = await this.props.signUp(email, password);
+        status = await signUp(email, password);
       } else {
-        status = await this.props.login(email, password);
+        status = await login(email, password);
       }
 
       if (!status) {
@@ -61,6 +67,26 @@ class Login extends Component {
     }
   };
 
+  phoneVerify = async (event) => {
+    event.preventDefault();
+    const { phoneNumberVerify, submitOpt } = this.props;
+    const { loginCreds, visibleOpt, confirmCall } = this.state;
+    this.setState({phoneLoading: true});
+    try {
+      if (!visibleOpt) {
+        const confirmCall = await phoneNumberVerify(loginCreds.phone);
+        this.setState({visibleOpt: true, confirmCall: confirmCall});
+      } else {
+        await submitOpt(loginCreds.otp, confirmCall);
+      }
+    } catch (error) {
+      console.log(error);
+      toastr.error('Something went wrong please try again');
+    }
+
+    this.setState({phoneLoading: false});
+  };
+
   onChange = (event) => {
     event.preventDefault();
     const creds = Object.assign({}, this.state.loginCreds);
@@ -73,7 +99,7 @@ class Login extends Component {
   };
 
   render() {
-    const {loginCreds, isAuthenticated, loading, mode} = this.state;
+    const { loginCreds, isAuthenticated, loading, mode, visibleOpt, phoneLoading } = this.state;
     return (
       <React.Fragment >
       {!isAuthenticated &&
@@ -81,7 +107,7 @@ class Login extends Component {
           <div className="row">
               <div className="col-md-12">
                   <div className="row">
-                      <div className="col-md-6 mx-auto">
+                      <div className="col-md-6">
                           <div className="card rounded-0">
                               <div className="card-header">
                                 <div className="row">
@@ -103,9 +129,29 @@ class Login extends Component {
                                         <input type="password" value={loginCreds.password} onChange={this.onChange} name="password" className="form-control form-control-lg rounded-0"  />
                                     </div>
                                     {loading ? <ReactLoading className="float-right" type="spin" color="#444"  height={30} width={30} /> :
-                                    <button onClick={this.login} className="btn btn-success btn-lg float-right">{mode ? 'SignUp' : 'Login'}</button> }
+                                    <button id="login-in-button" onClick={this.login} className="btn btn-success btn-lg float-right">{mode ? 'SignUp' : 'Login'}</button> }
                               </div>
                           </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="card rounded-0">
+                          <div className="card-header">
+                            <h3 className="mb-0">Verify phone number and login</h3>
+                          </div>
+                          <div className="card-body">
+                            {visibleOpt ? <div className="form-group">
+                              <label htmlFor="OPT">OPT</label>
+                              <input type="number" value={loginCreds.otp} onChange={this.onChange} name="otp"
+                                     className="form-control form-control-lg rounded-0"/>
+                            </div> : <div className="form-group">
+                              <label htmlFor="phone number">Phone</label>
+                              <input value={loginCreds.phone} onChange={this.onChange} name="phone" type="text"
+                                     className="form-control form-control-lg rounded-0"/>
+                            </div>}
+                            {phoneLoading ? <ReactLoading className="float-right" type="spin" color="#444"  height={30} width={30} /> :
+                              <button id="login-in-button" onClick={this.phoneVerify} className="btn btn-success btn-lg float-right">Submit</button> }
+                          </div>
+                        </div>
                       </div>
                   </div>
               </div>
