@@ -151,6 +151,7 @@ class Login extends Component {
                             {phoneLoading ? <ReactLoading className="float-right" type="spin" color="#444"  height={30} width={30} /> :
                               <button onClick={this.phoneVerify} className="btn btn-success btn-lg float-right">Submit</button> }
                           </div>
+                          <div id="login-in-button" />
                         </div>
                       </div>
                   </div>
