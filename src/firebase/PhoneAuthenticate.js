@@ -6,8 +6,8 @@ export const sendOtp = async (phoneNumber) => {
       'size': 'invisible'
     });
   }
-  return await auth.signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier);
 
+  return await auth.signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier);
 };
 
 export const submitOpt = async (opt, confirmationResult) => {
