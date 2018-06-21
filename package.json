@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/grecaptcha": "^2.0.35",
     "bootstrap": "^4.1.1",
     "firebase": "^5.0.4",
     "font-awesome": "^4.7.0",

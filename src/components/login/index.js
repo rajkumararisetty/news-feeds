@@ -129,7 +129,7 @@ class Login extends Component {
                                         <input type="password" value={loginCreds.password} onChange={this.onChange} name="password" className="form-control form-control-lg rounded-0"  />
                                     </div>
                                     {loading ? <ReactLoading className="float-right" type="spin" color="#444"  height={30} width={30} /> :
-                                    <button id="login-in-button" onClick={this.login} className="btn btn-success btn-lg float-right">{mode ? 'SignUp' : 'Login'}</button> }
+                                    <button onClick={this.login} className="btn btn-success btn-lg float-right">{mode ? 'SignUp' : 'Login'}</button> }
                               </div>
                           </div>
                       </div>
@@ -149,7 +149,7 @@ class Login extends Component {
                                      className="form-control form-control-lg rounded-0"/>
                             </div>}
                             {phoneLoading ? <ReactLoading className="float-right" type="spin" color="#444"  height={30} width={30} /> :
-                              <button id="login-in-button" onClick={this.phoneVerify} className="btn btn-success btn-lg float-right">Submit</button> }
+                              <button onClick={this.phoneVerify} className="btn btn-success btn-lg float-right">Submit</button> }
                           </div>
                         </div>
                       </div>
