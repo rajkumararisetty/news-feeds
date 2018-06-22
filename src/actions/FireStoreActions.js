@@ -23,18 +23,27 @@ export const addFeed = (feedDetails) => (
   }
 );
 
-export const getFeeds = (limit=10, offset=10) => (
+export const getInitialFeeds = () => (
   async (dispatch) => {
-    try {
-      const feedsList = await Feeds.getFeeds(limit, offset);
-      if (feedsList.size > 0) {
-        dispatch(listFeeds(feedsList));
-        return true;
-      }
-      return false;
-    } catch(error) {
-      throw error;
+    const feedsList = await Feeds.getFeeds();
+    if ((feedsList.documents).size > 0) {
+      dispatch(listFeeds(feedsList.documents));
+      return feedsList.next;
     }
+
+    return false;
+  }
+);
+
+export const getNextFeeds = (next) => (
+  async (dispatch) => {
+    const feedsList = await Feeds.getFeeds(next);
+    if ((feedsList.documents).size > 0) {
+      dispatch(listFeeds(feedsList.documents));
+      return feedsList.next;
+    }
+
+    return false;
   }
 );
 

@@ -15,49 +15,59 @@ class Dashboard extends PureComponent {
         ownerEmail: this.props.auth.user.email,
         ownerId: this.props.auth.user.userId,
         like: [],
-        id:""
+        id:"",
+        nextFeeds:''
       }
     };
     this.logout = this.logout.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onLike = this.onLike.bind(this);
+    this.onScroll = this.onScroll.bind(this);
   }
 
   componentDidMount = () => {
-    const { feedsAction } = this.props;
-    const set = db.collection("posts").orderBy('createdTime', 'desc');
-    this.unSubscribe = set.onSnapshot(function(feedsList) {
-        if (feedsList.size > 0) {
-          toastr.info('Update', 'Updating List');
-          feedsAction.listFeeds(feedsList);
-        }
+    this.props.feedsAction.getInitialFeeds().then((nextFeeds) => {
+      this.setState({nextFeeds});
+    }).catch(error => {
+      console.log(error);
     });
-  }
+  };
 
   componentWillUnmount = () => {
     this.unSubscribe();
-  }
+  };
+
+  onScroll = async () => {
+    try {
+      const nextFeeds = await this.props.feedsAction.getNextFeeds(this.state.next)
+      this.setState({
+        nextFeeds
+      });
+    } catch(error) {
+      console.log('error');
+    }
+
+  };
 
   onChange = (event) => {
     event.preventDefault();
     const newFeed = Object.assign({}, this.state.feed);
     newFeed[event.target.name] = event.target.value;
     this.setState({feed: newFeed});
-  }
+  };
 
   onLike = (event, feed) => {
     event.preventDefault();
     if ((feed.like).indexOf(this.props.auth.user.email) === -1) {
-      const like = [this.props.auth.user.email, ...feed.like]
+      const like = [this.props.auth.user.email, ...feed.like];
       this.props.feedsAction.updateFeeds(feed.id, like).catch(error => {
-        console.log(error);
         toastr.error('Something went wrong please try again');
       });
     } else {
       toastr.warning('Hey', 'You already liked this');
     }
-  }
+  };
 
   onSubmit = async (event) => {
     event.preventDefault();
@@ -66,18 +76,18 @@ class Dashboard extends PureComponent {
       if (status) {
         toastr.success('Success', 'Feed Added');
         const newFeed = Object.assign({}, this.state.feed);
-        newFeed.postText = "",
-        newFeed.ownerEmail = this.props.auth.user.email,
-        newFeed.ownerId = this.props.auth.user.userId,
-        newFeed.like = [],
-        newFeed.id = ""
+        newFeed.postText = "";
+        newFeed.ownerEmail = this.props.auth.user.email;
+        newFeed.ownerId = this.props.auth.user.userId;
+        newFeed.like = [];
+        newFeed.id = "";
         this.setState({feed: newFeed});
         return true;
       }
     } catch(error) {
       toastr.error('Something went wrong please try again');
     }
-  }
+  };
 
   logout = (event) => {
     event.preventDefault();
@@ -86,7 +96,7 @@ class Dashboard extends PureComponent {
         this.props.history.push('/login');
       }
     });
-  }
+  };
 
   render() {
     const { user } = this.props.auth;
