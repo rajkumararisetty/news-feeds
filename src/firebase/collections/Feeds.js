@@ -22,9 +22,13 @@ export const getFeeds = async (nextFeeds='') => {
     }
     const documents = await set.get();
     const docsLength = documents.docs.length;
-    const lastVisible = documents.docs[docsLength-1];
-    const next = db.collection("posts").orderBy('createdTime', 'desc').startAfter(lastVisible).limit(queryConfig.feedsListingLimit);
-    return {documents, next}
+    let next = false;
+    if (docsLength === queryConfig.feedsListingLimit) {
+      const lastVisible = documents.docs[docsLength-1];
+      next = db.collection("posts").orderBy('createdTime', 'desc').startAfter(lastVisible).limit(queryConfig.feedsListingLimit);
+    }
+
+    return {documents, next};
   } catch (error) {
     throw error;
   }

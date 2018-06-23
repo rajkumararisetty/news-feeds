@@ -3,7 +3,6 @@ import { toastr } from 'react-redux-toastr';
 import NavBar from './nav';
 import Feed from './feeds';
 import './styles.css';
-import { db } from '../../firebase/Initialize';
 
 class Dashboard extends PureComponent {
 
@@ -18,7 +17,7 @@ class Dashboard extends PureComponent {
         id:"",
         createdTime: ''
       },
-      nextFeeds:'',
+      nextFeeds:false,
       feedsLoading: false
     };
     this.logout = this.logout.bind(this);
@@ -39,22 +38,24 @@ class Dashboard extends PureComponent {
 
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('scroll', this.onScroll);
   };
 
   onScroll = (event) => {
     event.preventDefault();
-    const scrollableHeight = document.body.scrollHeight * 0.65;
-    if (scrollableHeight < window.scrollY && !this.state.feedsLoading) {
+    const bodyContentHeight = document.body.offsetHeight;
+    const dynamicScrolledHeight = window.pageYOffset;
+    const scrollEnd = dynamicScrolledHeight + window.innerHeight;
+    if ((bodyContentHeight >= scrollEnd) && !this.state.feedsLoading && this.state.nextFeeds) {
       this.setState({feedsLoading: true}, () => {
-          const nextFeeds = this.props.feedsAction.getFeeds(this.state.nextFeeds).then(nextFeeds => {
-            this.setState({
-              nextFeeds,
-              feedsLoading: false
-            });
-          }).catch(error => {
-            toastr.error('Something went please reload the page');
+        const nextFeeds = this.props.feedsAction.getFeeds(this.state.nextFeeds).then(nextFeeds => {
+          this.setState({
+            nextFeeds,
+            feedsLoading: false
           });
+        }).catch(error => {
+          toastr.error('Something went please reload the page');
+        });
       });
     }
   };
@@ -109,13 +110,13 @@ class Dashboard extends PureComponent {
 
   render() {
     const { user } = this.props.auth;
-    const { feedsList } = this.props
-    const { feed } = this.state;
+    const { feedsList } = this.props;
+    const { feed, feedsLoading } = this.state;
     return (
       <React.Fragment>
         <NavBar logout={this.logout} />
         <div className="container py-5">
-          <Feed onLike={this.onLike} feedsList={feedsList} currentFeed={feed} onChange={this.onChange} onSubmit={this.onSubmit} />
+          <Feed feedsLoading={feedsLoading} onLike={this.onLike} feedsList={feedsList} currentFeed={feed} onChange={this.onChange} onSubmit={this.onSubmit} />
         </div>
       </React.Fragment>
     );

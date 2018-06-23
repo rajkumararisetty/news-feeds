@@ -4,14 +4,14 @@ import {FeedInput} from './FeedInput';
 import {FeedsList} from './FeedsList';
 import './styles.css';
 
-export const Feed = ({feedsList, onChange, currentFeed, onSubmit, onLike}) => (
+export const Feed = ({feedsList, onChange, currentFeed, onSubmit, onLike, feedsLoading}) => (
   <React.Fragment>
     <div className="row">
       <div className="col-sm-3"> </div>
         <div className="col-sm-6">
           <FeedInput onChange={onChange} currentFeed={currentFeed} onSubmit={onSubmit} />
           <br />
-          <FeedsList onLike={onLike} feedsList={feedsList} />
+          <FeedsList onLike={onLike} feedsList={feedsList} feedsLoading={feedsLoading} />
         </div>
       <div className="col-sm-3"> </div>
     </div>
