@@ -16,8 +16,10 @@ class Dashboard extends PureComponent {
         ownerId: this.props.auth.user.userId,
         like: [],
         id:"",
-        nextFeeds:''
-      }
+        createdTime: ''
+      },
+      nextFeeds:'',
+      feedsLoading: false
     };
     this.logout = this.logout.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -27,27 +29,34 @@ class Dashboard extends PureComponent {
   }
 
   componentDidMount = () => {
-    this.props.feedsAction.getInitialFeeds().then((nextFeeds) => {
+    window.addEventListener('scroll', this.onScroll);
+    this.props.feedsAction.getFeeds().then((nextFeeds) => {
       this.setState({nextFeeds});
     }).catch(error => {
       console.log(error);
     });
   };
 
-  componentWillUnmount = () => {
-    this.unSubscribe();
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   };
 
-  onScroll = async () => {
-    try {
-      const nextFeeds = await this.props.feedsAction.getNextFeeds(this.state.next)
-      this.setState({
-        nextFeeds
+  onScroll = (event) => {
+    event.preventDefault();
+    const scrollableHeight = document.body.scrollHeight * 0.65;
+    if (scrollableHeight < window.scrollY && !this.state.feedsLoading) {
+      this.setState({feedsLoading: true}, () => {
+          const nextFeeds = this.props.feedsAction.getFeeds(this.state.nextFeeds).then(nextFeeds => {
+            this.setState({
+              nextFeeds,
+              feedsLoading: false
+            });
+          }).catch(error => {
+            toastr.error('Something went please reload the page');
+          });
       });
-    } catch(error) {
-      console.log('error');
     }
-
   };
 
   onChange = (event) => {

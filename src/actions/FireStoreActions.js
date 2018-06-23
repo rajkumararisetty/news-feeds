@@ -1,8 +1,8 @@
 import { ADD_FEED, LIST_FEEDS, DELETE_FEED } from './ActionTypes';
 import * as Feeds from '../firebase/collections/Feeds';
 
-const addFeedAction = (id, feed) => (
-  {type: ADD_FEED, feed, id}
+const addFeedAction = (id, createdTime, feed) => (
+  {type: ADD_FEED, id, createdTime, feed}
 );
 
 export const listFeeds = (feeds) => (
@@ -12,8 +12,9 @@ export const listFeeds = (feeds) => (
 export const addFeed = (feedDetails) => (
   async (dispatch) => {
     try {
-      const addResponse = await Feeds.addFeed(feedDetails);
-      if (addResponse.id) {
+      const feed = await Feeds.addFeed(feedDetails);
+      if (feed.addResponse.id) {
+        dispatch(addFeedAction(feed.addResponse.id, feed.createdTime, feedDetails));
         return true;
       }
       return false
@@ -23,19 +24,7 @@ export const addFeed = (feedDetails) => (
   }
 );
 
-export const getInitialFeeds = () => (
-  async (dispatch) => {
-    const feedsList = await Feeds.getFeeds();
-    if ((feedsList.documents).size > 0) {
-      dispatch(listFeeds(feedsList.documents));
-      return feedsList.next;
-    }
-
-    return false;
-  }
-);
-
-export const getNextFeeds = (next) => (
+export const getFeeds = (next) => (
   async (dispatch) => {
     const feedsList = await Feeds.getFeeds(next);
     if ((feedsList.documents).size > 0) {

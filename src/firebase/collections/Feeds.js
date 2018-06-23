@@ -1,27 +1,31 @@
 import { db } from '../Initialize';
+import { queryConfig } from '../../constants/Firebase';
 
 export const addFeed = async (postDetails) => {
-  return await db.collection("posts").add({
+  const createdTime = Date.now();
+  const addResponse = await db.collection("posts").add({
       ownerID: postDetails.ownerId,
       postText: postDetails.postText,
       ownerEmail: postDetails.ownerEmail,
       like: postDetails.like,
-      createdTime: Date.now()
+      createdTime: createdTime
   });
+
+  return {addResponse, createdTime};
 };
 
-export const getFeeds = async (next='') => {
+export const getFeeds = async (nextFeeds='') => {
   try {
-    let set = db.collection("posts").orderBy('createdTime', 'desc').limit(5);
-    if (next) {
-      set=next;
+    let set = db.collection("posts").orderBy('createdTime', 'desc').limit(queryConfig.feedsListingLimit);
+    if (nextFeeds) {
+      set=nextFeeds;
     }
     const documents = await set.get();
-    const lastVisible = documents.docs[documents.docs.length-1];
-    const next = db.collection("posts").orderBy('createdTime', 'desc').startAfter(lastVisible).limit(5);
+    const docsLength = documents.docs.length;
+    const lastVisible = documents.docs[docsLength-1];
+    const next = db.collection("posts").orderBy('createdTime', 'desc').startAfter(lastVisible).limit(queryConfig.feedsListingLimit);
     return {documents, next}
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
